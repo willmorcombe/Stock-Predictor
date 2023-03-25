@@ -1,9 +1,11 @@
 from django.core.management.base import BaseCommand, CommandError
-from stocks.models import Stocks
+from stocks.models import Stock, StockData
 
 import yfinance as yf
 import pandas as pd
 
+
+# put in a view!
 class Command(BaseCommand):
     help = 'Adds two years worth of stock data to the database specified by the companys ticker'
 
@@ -12,6 +14,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         stock_ticker = options['ticker'].upper()
+
+        if Stock.objects.filter(ticker = stock_ticker).exists():
+            print('Company already exists in database.')
+            return
 
         print('Downloading data from ' + stock_ticker)
         data = pd.DataFrame([])
@@ -46,19 +52,23 @@ class Command(BaseCommand):
         # create column for date time
         data['Date Time'] = data.index
 
-        # save data to Stocks model
+        # save data to all stock models
         data_records = data.to_dict('records')
+
+        stock = Stock(ticker = stock_ticker)
+        stock.save()
+
         model_instances = [
-            Stocks(
-                ticker = stock_ticker,
+            StockData(
                 open = record['Open'],
                 high = record['High'],
                 low = record['Low'],
                 close = record['Close'],
                 adj_close = record['Adj Close'],
                 volume = record['Volume'],
-                date_time = record['Date Time']
+                date_time = record['Date Time'],
+                stock = stock
             ) for record in data_records
         ]
 
-        Stocks.objects.bulk_create(model_instances)
+        StockData.objects.bulk_create(model_instances)
