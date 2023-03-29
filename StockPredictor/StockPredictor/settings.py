@@ -128,7 +128,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+AI_MODELS_URL = 'stocks/ai_models/'
 
 # for postman
 
