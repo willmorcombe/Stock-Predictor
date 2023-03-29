@@ -5,7 +5,7 @@ import yfinance as yf
 import pandas as pd
 
 
-# put in a view!
+# todo: put in a view!
 class Command(BaseCommand):
     help = 'Adds two years worth of stock data to the database specified by the companys ticker'
 

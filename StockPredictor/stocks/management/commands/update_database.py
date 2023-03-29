@@ -7,11 +7,13 @@ from dateutil.relativedelta import relativedelta
 import yfinance as yf
 import pandas as pd
 
-# This should be ran every 30 mins by a script to update with current data
+# !This should be ran every 1 hour by a script to update with current data
 
-# how should we do this? We could just delete all data then run the
-# new stock download command which is good. Or we could delete all data before
-# years ago. Then add data from where it has stopped.
+# TODO: Implement comment below
+
+#? how should we do this? We could just delete all data then run the
+#? new stock download command which is good. Or we could delete all data before
+#? years ago. Then add data from where it has stopped. 
 
 class Command(BaseCommand):
     help = 'Updates all stocks to ONLY have 2 years worth of data.'
