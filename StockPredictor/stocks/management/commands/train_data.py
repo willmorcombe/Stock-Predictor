@@ -1,27 +1,29 @@
 
-""" TODO: command to loop through all tickers and train model on them, save in ai_models folder.
-          !Only run this at the end of each day
-"""
+#!Only run this at the end of each day
 
-from django.core.management.base import BaseCommand, CommandError
+# TODO : Potetntially change the look back value to something larger, like the number of datapoints per day
+
+import datetime
+import pickle
+from datetime import date
+
+import numpy as np
+import pandas as pd
+import yfinance as yf
+
 from django.conf import settings
+from django.core.management.base import BaseCommand, CommandError
 from stocks.models import Stock, StockData
 
-import yfinance as yf
-import pandas as pd
-import datetime
-import numpy as np
-import pickle
-
+from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
-from tensorflow.keras import layers
+
 
 class Command(BaseCommand):
     help = 'trains models on all tickers in the database'
 
     def strToDatetime(self, s):
-        print(s)
         split_day_month_year = s.split('T')[0].split('-')
         split_hour_minute_sec = s.split('T')[1].split(':')
         year, month, day, hour, minute= int(split_day_month_year[0]), int(split_day_month_year[1]), int(split_day_month_year[2]), int(split_hour_minute_sec[0]), int(split_hour_minute_sec[1])
@@ -98,28 +100,24 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # get the all stock objects in the database
         stock_in_database = Stock.objects.all()
+        current_date = date.today()
 
-        training_params = {
-            'look_back' : 3, # the number of data points to look back at
-            'epochs' : 100, # training epochs
-
-        }
 
         for stock in stock_in_database: # loop through each stock
-            data = pd.DataFrame(list(StockData.objects.filter(stock=stock).values()))
+            data = pd.DataFrame(list(StockData.objects.filter(stock=stock, date_time__lt=current_date).values()))
             data = data[['date_time', 'close']]
             # create the date the index
 
             data.index = data.pop('date_time')
 
-            # start and end date to create windowed_df out of
-            
-            start_date = str(data.head(training_params['look_back'] + 1).tail(1).index.values[0])
-            end_date = str(data.tail(1).index.values[0])
+            # start and end date to create windowed_df, end date should be the last datetime of yesterday
+            start_date = str(data.head(settings.TRAINING_PARAMS['look_back'] + 1).tail(1).index.values[0])
+            end_date = str(data.tail(1).index.values[0]) 
+            print(end_date)
             windowed_df = self.dfToWindowedDf(data,
                                 start_date,
                                 end_date,
-                                n=training_params['look_back'])
+                                n=settings.TRAINING_PARAMS['look_back'])
             
             dates, X, y = self.windowedDfToDateX_y(windowed_df)
             dates.shape, X.shape, y.shape
@@ -137,7 +135,7 @@ class Command(BaseCommand):
                         optimizer=Adam(learning_rate=0.001),
                         metrics=['mean_absolute_error'])
 
-            model.fit(X_train, y_train, epochs=training_params['epochs'])
+            model.fit(X_train, y_train, epochs=settings.TRAINING_PARAMS['epochs'])
 
             print('saving ' + stock.ticker + 'model')
             # save model in ai_models directory

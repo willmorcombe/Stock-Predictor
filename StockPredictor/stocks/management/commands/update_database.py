@@ -11,6 +11,8 @@ import pandas as pd
 
 # TODO: Implement comment below
 
+#! When this runs, the stock id gets changed, this shouldn't happen! Fix this
+
 #? how should we do this? We could just delete all data then run the
 #? new stock download command which is good. Or we could delete all data before
 #? years ago. Then add data from where it has stopped. 
