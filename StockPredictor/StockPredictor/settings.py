@@ -128,9 +128,18 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AI_MODELS_URL = 'stocks/ai_models/'
 
 # for postman
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDINTIALS = True
+
+
+# for the ai stuff
+
+AI_MODELS_URL = 'stocks/ai_models/'
+
+TRAINING_PARAMS = {
+    'look_back' : 3, # the number of data points to look back at
+    'epochs' : 100, # training epochs
+}
