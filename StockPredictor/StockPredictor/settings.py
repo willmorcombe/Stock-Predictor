@@ -11,9 +11,16 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import environ
+import os
+
+
+env = environ.Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+# read environment variables from base path
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -76,16 +83,17 @@ WSGI_APPLICATION = 'StockPredictor.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'stockpredictor',
-        'USER' : 'root',
-        'PASSWORD' : 'password',
-        'HOST' : 'localhost'
+        'NAME': env('DATABASE_NAME'),
+        'USER' : env('DATABASE_USER'),
+        'PASSWORD' : env('DATABASE_PASSWORD'),
+        'HOST' : env('DATABASE_HOST'),
     }
 }
+
+
 
 
 # Password validation
@@ -141,6 +149,9 @@ CORS_ALLOW_CREDINTIALS = True
 AI_MODELS_URL = 'stocks/ai_models/'
 
 TRAINING_PARAMS = {
-    'look_back' : 3, # the number of data points to look back at
-    'epochs' : 100, # training epochs
+    'look_back' : 28, # the number of data points to look back at
+    'epochs' : 20, # training epochs
+    'forward_predictions' : 7, # how many predictions to make
 }
+
+ALPHAVANTAGE_API_KEY = '7B1AML3IUO4Z75KL'

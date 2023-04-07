@@ -1,8 +1,10 @@
 from django.core.management.base import BaseCommand, CommandError
+from django.conf import settings
 from stocks.models import Stock, StockData
 
 import yfinance as yf
 import pandas as pd
+import requests
 
 
 # todo: put in a view!
@@ -21,9 +23,11 @@ class Command(BaseCommand):
 
         print('Downloading data from ' + stock_ticker)
         data = pd.DataFrame([])
+        company_info = {}
 
         # attempt to download data from the given ticker
         try:
+            # stock data
             data = yf.download(  # or pdr.get_data_yahoo(...
                 # tickers list or string as well
                 tickers = stock_ticker,
@@ -33,7 +37,7 @@ class Command(BaseCommand):
                 # (optional, default is '1mo')
                 period = "2y",
 
-                # fetch data by interval (including intraday if period < 60 days)
+                # fetch data by interval ( including intraday if period < 60 days)
                 # valid intervals: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo
                 # (optional, default is '1d')
                 interval = "1h",
@@ -42,6 +46,12 @@ class Command(BaseCommand):
                 # (optional, default is 'column')
                 group_by = 'ticker'
             )
+            # stock info
+
+            url = 'https://www.alphavantage.co/query?function=OVERVIEW&symbol='+ stock_ticker + '&apikey=' + settings.ALPHAVANTAGE_API_KEY
+            r = requests.get(url)
+            company_info = r.json()
+
         except Exception as e:
             print('Error with download data ---> ' + e)
 
@@ -55,7 +65,15 @@ class Command(BaseCommand):
         # save data to all stock models
         data_records = data.to_dict('records')
 
-        stock = Stock(ticker = stock_ticker)
+        stock = Stock(
+            ticker = stock_ticker,
+            company_name = company_info['Name'],
+            company_description = company_info['Description'],
+            company_currency = company_info['Currency'],
+            company_country = company_info['Country'],
+            company_industry = company_info['Industry']
+        )
+
         stock.save()
 
         model_instances = [

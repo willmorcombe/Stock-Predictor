@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+  stockpredictor-db:
+    image: mysql:8.0
+    container_name: stockpredictor-db
+    build:
+      context: ./stockpredictor-db/
+      dockerfile: Dockerfile
+    environment:
+      MYSQL_DATABASE: "stockpredictor"
+      MYSQL_ROOT_USER: "root"
+      MYSQL_ROOT_PASSWORD: "password"
+    networks:
+      - db-net
+
+  stockpredictor-app:
+    restart: on-failure
+    container_name: stockpredictor-app
+    build:
+      context: ./stockpredictor-app/
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ../:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - stockpredictor-db
+    networks:
+      - db-net
+
+  pma:
+    restart: on-failure
+    image: phpmyadmin/phpmyadmin
+    container_name: stockpredictor-pma
+    ports:
+      - 4000:80
+    networks:
+      - db-net
+    environment:
+      PMA_HOST: stockpredictor-db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: password
+      UPLOAD_LIMIT: 300M
+
+networks:
+  db-net:
+    driver: bridge
