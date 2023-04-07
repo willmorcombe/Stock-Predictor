@@ -1,8 +1,10 @@
 from django.core.management.base import BaseCommand, CommandError
-from stocks.models import Stock, StockData
+from django.conf import settings
 
-from datetime import datetime as dt
-from dateutil.relativedelta import relativedelta
+from stocks.models import Stock, StockData, StockPredictionData, StockPredictionHistory
+
+from datetime import datetime, timedelta
+from datetime import date
 
 import yfinance as yf
 import pandas as pd
@@ -10,8 +12,6 @@ import pandas as pd
 # !This should be ran every 1 hour by a script to update with current data
 
 # TODO: Implement comment below
-
-#! When this runs, the stock id gets changed, this shouldn't happen! Fix this
 
 #? how should we do this? We could just delete all data then run the
 #? new stock download command which is good. Or we could delete all data before
@@ -26,8 +26,8 @@ class Command(BaseCommand):
         # get the tickers in the database
         tickers_in_database = [x['ticker'] for x in Stock.objects.values('ticker').distinct()]
 
-        # delete all data that is over two years then re add the stock data
-        Stock.objects.all().delete()
+        # delete all stock data that is over two years then re add the stock data
+        StockData.objects.all().delete()
 
 
         # for each ticker, get the last datapoint, then add data from then to now with yfinance
@@ -68,8 +68,7 @@ class Command(BaseCommand):
             # save data to all stock models
             data_records = data.to_dict('records')
 
-            stock = Stock(ticker = ticker)
-            stock.save()
+            stock = Stock.objects.filter(ticker = ticker).first()
 
             model_instances = [
                 StockData(
@@ -86,5 +85,55 @@ class Command(BaseCommand):
 
             StockData.objects.bulk_create(model_instances)
 
+            # logic for adding stock prediction history to the database
+            #? my way of doing this is get the last date time from prediction data, 
+            #? and actual data, if they line up, then push to database 
+            #? IF THERE IS NOT A VALUE THERE ALREADY
+            actual_data_datetime = StockData.objects.filter(
+                stock=stock
+            ).values('date_time').last()
+            prediction_data_datetime = StockPredictionData.objects.filter(
+                stock=stock
+            ).values('date_time').last()
 
+            prediction_end_close = StockPredictionData.objects.filter(
+                stock=stock
+            ).values('close').last()
+
+            actual_end_close = StockData.objects.filter(
+                stock=stock
+            ).values('close').last()
+
+            day = date.today() - timedelta(days=1)
+            # day = date.today()
+            
+
+
+            prediction_data_day = StockPredictionData.objects.filter(
+                stock=stock
+            ).order_by('-date_time').values('close')[:settings.TRAINING_PARAMS['forward_predictions']][::-1]
+            actual_data_day = StockData.objects.filter(
+                stock = stock
+            ).order_by('-date_time').values('close')[:settings.TRAINING_PARAMS['forward_predictions']][::-1]
+
+            correct_prediction = None
+            if (((actual_data_day[0]['close'] > actual_data_day[::-1][0]['close']) and (prediction_data_day[0]['close'] > prediction_data_day[::-1][0]['close'])) or ((actual_data_day[0]['close'] < actual_data_day[::-1][0]['close']) and (prediction_data_day[0]['close'] < prediction_data_day[::-1][0]['close']))):
+                 correct_prediction = True
+            else:
+                correct_prediction = False
+
+            
+            if actual_data_datetime == prediction_data_datetime:
+                # #! if today isn't in the history AND today isn't a weekend, then add
+                if (day.weekday() != 5 and day.weekday() != 6) and not(StockPredictionHistory.objects.filter(stock=stock, day=day).exists()):
+                    StockPredictionHistory(
+                        stock=stock,
+                        prediction_end_close=prediction_end_close['close'],
+                        actual_end_close=actual_end_close['close'],
+                        correct_prediction= correct_prediction,
+                        day=day
+                    ).save()
+                
+                
+                
 

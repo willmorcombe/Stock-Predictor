@@ -8,6 +8,12 @@ import numpy as np
 
 class Stock(models.Model):
     ticker = models.CharField(max_length=10)
+    company_name = models.CharField(max_length=50)
+    company_description = models.TextField()
+    company_currency = models.CharField(max_length=10)
+    company_country = models.CharField(max_length=50)
+    company_industry = models.CharField(max_length=200)
+    
 
 class StockData(models.Model):
 
@@ -27,21 +33,18 @@ class StockData(models.Model):
         current_date = date.today()
         return self.objects.filter(stock=stock, date_time__lt=current_date)[::-1][:settings.TRAINING_PARAMS['look_back']]
 
+    
+class StockPredictionData(models.Model):
+    close = models.FloatField()
+    date_time = models.DateTimeField()
+    stock = models.ForeignKey(Stock, on_delete=models.CASCADE, default=None)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    # this method takes a set of stock_data models, it will pass the model their close data
-    # and return its next days prediciton
-    @classmethod
-    def make_prediction_day(self, stock, model_input):
-        
-        model = pickle.load(open(settings.AI_MODELS_URL + stock.ticker + '.pkl', 'rb'))
+class StockPredictionHistory(models.Model):
+    stock = models.ForeignKey(Stock, on_delete=models.CASCADE, default=None)
+    correct_prediction = models.BooleanField()
+    prediction_end_close = models.FloatField()
+    actual_end_close = models.FloatField()
+    day = models.DateTimeField()
+    
 
-        recursive_predictions = []
-
-        last_window = np.array([[stock_data.close] for stock_data in model_input])
-
-        for x in range(5): #! specify how many data points are in a day somewhere
-            next_prediction = model.predict(np.array([last_window])).flatten()
-            recursive_predictions.append(next_prediction)
-            last_window[-1] = next_prediction
-
-        return recursive_predictions

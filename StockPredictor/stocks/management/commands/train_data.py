@@ -13,7 +13,7 @@ import yfinance as yf
 
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
-from stocks.models import Stock, StockData
+from stocks.models import Stock, StockData, StockPredictionData
 
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
@@ -21,13 +21,55 @@ from tensorflow.keras.optimizers import Adam
 
 
 class Command(BaseCommand):
-    help = 'trains models on all tickers in the database'
+    help = 'trains models on all tickers in the database and saves daily predictions'
+
+    def make_prediction_day(self, stock, model_input):
+        
+        model = pickle.load(open(settings.AI_MODELS_URL + stock.ticker + '.pkl', 'rb'))
+
+        recursive_predictions = []
+
+        last_window = np.array([[stock_data.close] for stock_data in model_input])[::-1]
+
+        # make sure this is not a weekend
+        date_now = datetime.datetime.now()
+        while True:
+            if date_now.weekday() == 5 or date_now.weekday() == 6:
+                date_now = date_now + datetime.timedelta(days=1)
+            else:
+                break
+
+
+        for x in range(settings.TRAINING_PARAMS['forward_predictions']):
+            next_prediction = model.predict(np.array([last_window])).flatten()
+
+            recursive_predictions.append([datetime.datetime(
+                date_now.year, 
+                date_now.month, 
+                date_now.day, 
+                x + 13, 
+                30, 
+                0
+            ), next_prediction])
+
+            last_window = last_window.tolist()
+            last_window.append(np.array(next_prediction))
+            last_window.pop(0)
+            last_window = np.array(last_window)
+
+        return recursive_predictions
 
     def strToDatetime(self, s):
         split_day_month_year = s.split('T')[0].split('-')
         split_hour_minute_sec = s.split('T')[1].split(':')
         year, month, day, hour, minute= int(split_day_month_year[0]), int(split_day_month_year[1]), int(split_day_month_year[2]), int(split_hour_minute_sec[0]), int(split_hour_minute_sec[1])
-        return datetime.datetime(year=year, month=month, day=day, hour=hour, minute=minute)
+        return datetime.datetime(
+            year=year,
+            month=month,
+            day=day, 
+            hour=hour, 
+            minute=minute
+        )
 
     
     def windowedDfToDateX_y(self, windowed_dataframe):
@@ -44,7 +86,7 @@ class Command(BaseCommand):
     
 
     # Complex function that turns the data into a dataframe for the model to use
-    def dfToWindowedDf(self, dataframe, first_date_str, last_date_str, n=3):
+    def dfToWindowedDf(self, dataframe, first_date_str, last_date_str, n):
         first_date = self.strToDatetime(first_date_str)
         last_date  = self.strToDatetime(last_date_str)
         target_date = first_date
@@ -125,7 +167,7 @@ class Command(BaseCommand):
             # get the whole data for training
             dates_train, X_train, y_train = dates, X, y
 
-            model = Sequential([layers.Input((3, 1)),
+            model = Sequential([layers.Input((settings.TRAINING_PARAMS['look_back'], 1)),
                                 layers.LSTM(64),
                                 layers.Dense(32, activation='relu'),
                                 layers.Dense(32, activation='relu'),
@@ -140,5 +182,30 @@ class Command(BaseCommand):
             print('saving ' + stock.ticker + 'model')
             # save model in ai_models directory
             pickle.dump(model, open(settings.AI_MODELS_URL + stock.ticker + '.pkl', 'wb'))
+
+
+            # get predictions and save them
+            
+            model_input = StockData.get_data_for_prediction(stock)
+            predictions = self.make_prediction_day(stock, model_input)
+
+            for prediction_date, prediction in predictions:
+                # if prediction_date is not in database, add prediction
+                if not(StockPredictionData.objects.filter(
+                    stock= stock,
+                    date_time = prediction_date
+                ).exists()):
+                    
+                    predictions_objs = StockPredictionData(
+                        close = prediction, 
+                        date_time = prediction_date,
+                        stock = stock,
+                        )
+                    predictions_objs.save()
+
+            
+
+
+        
 
 
