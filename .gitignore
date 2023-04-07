@@ -1,4 +1,5 @@
 virtual-env/
+jupyter-testing/
 .vscode
 StockPredictor/frontend/node_modules/
 StockPredictor/StockPredictor/__pycache__/
