@@ -1,6 +1,7 @@
 virtual-env/
 .vscode
-
+StockPredictor/frontend/node_modules/
+StockPredictor/StockPredictor/__pycache__/
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,pythonvanilla,visualstudiocode,pydev,pycharm
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,pythonvanilla,visualstudiocode,pydev,pycharm
