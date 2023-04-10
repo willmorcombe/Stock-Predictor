@@ -1,0 +1,37 @@
+version: "3.7"
+
+services:
+  stockpredictor-db:
+    image: mysql:8.0
+    container_name: stockpredictor-db
+    volumes:
+      - ./database/db-data:/var/lib/mysql
+      - ./database/stockpredictor.sql:/docker-entrypoint-initdb.d/0_init.sql
+    environment:
+      MYSQL_DATABASE: "stockpredictor"
+      MYSQL_ROOT_USER: "root"
+      MYSQL_ROOT_PASSWORD: "password"
+
+  app:
+    build:
+      context: .
+    volumes:
+      - static_data:/vol/web
+    environment:
+      - SECRET_KEY=django-insecure-9@l^-qwhrrjusb1yqj5iu-qsfn635likb512k9(2b=(#i2%oe)
+      - ALLOWED_HOSTS=127.0.0.1,localhost,77.68.115.53
+    depends_on:
+      - stockpredictor-db
+
+  proxy:
+    build:
+      context: ./proxy
+    volumes:
+      - static_data:/vol/static
+    ports:
+      - "8080:8080"
+    depends_on:
+      - app
+
+volumes:
+  static_data:
