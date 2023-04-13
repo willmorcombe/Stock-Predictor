@@ -6,7 +6,6 @@ services:
     container_name: stockpredictor-db
     volumes:
       - ./database/db-data:/var/lib/mysql
-      - ./database/stockpredictor.sql:/docker-entrypoint-initdb.d/0_init.sql
     environment:
       MYSQL_DATABASE: "stockpredictor"
       MYSQL_ROOT_USER: "root"
@@ -19,7 +18,7 @@ services:
       - static_data:/vol/web
     environment:
       - SECRET_KEY=django-insecure-9@l^-qwhrrjusb1yqj5iu-qsfn635likb512k9(2b=(#i2%oe)
-      - ALLOWED_HOSTS=77.68.115.53
+      - ALLOWED_HOSTS=localhost,77.68.115.53
     depends_on:
       - stockpredictor-db
 
@@ -32,6 +31,17 @@ services:
       - "80:80"
     depends_on:
       - app
+
+  pma:
+    restart: on-failure
+    image: phpmyadmin/phpmyadmin
+    container_name: stockpredictor-pma
+    ports:
+      - 4000:80
+    environment:
+      PMA_HOST: stockpredictor-db
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: 300M
 
 volumes:
   static_data:
