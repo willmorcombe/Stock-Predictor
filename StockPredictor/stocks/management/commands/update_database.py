@@ -104,8 +104,8 @@ class Command(BaseCommand):
                 stock=stock
             ).values('close').last()
 
-            day = date.today() - timedelta(days=1)
-            # day = date.today()
+            # day = date.today() - timedelta(days=1)
+            day = date.today()
             
 
 
