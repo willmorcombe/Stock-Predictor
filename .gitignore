@@ -1,9 +1,11 @@
 virtual-env/
+.env
 jupyter testing/
 .vscode
 StockPredictor/frontend/node_modules/
 StockPredictor/StockPredictor/__pycache__/
 StockPredictor/database/db-data/
+StockPredictor/.env
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,pythonvanilla,visualstudiocode,pydev,pycharm
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,pythonvanilla,visualstudiocode,pydev,pycharm
