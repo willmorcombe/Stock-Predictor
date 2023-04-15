@@ -47,9 +47,9 @@ export default function Hompage(props) {
     <div>
       <section className="hompage-section">
         <div className="homepage-data">
-          <h1>Stock Prediction</h1>
-          <h2>Website Description</h2>
-          <p>
+          <h1 className="info-item">Stock Prediction</h1>
+          <h2 className="info-item">Website Description</h2>
+          <h7 className="description info-item">
             This website is a test to try and prove the illegitimacy of
             predicting stock trends on purely historical data. Below are nine
             stocks that have been tracked and a model has been trained on each
@@ -57,8 +57,8 @@ export default function Hompage(props) {
             below figure is a percentage of correct prediction (meaning did the
             stock go up when it was predicted to, or did the stock go down when
             it was predicted to).
-          </p>
-          <h2>Total Correct Prediction Percentage</h2>
+          </h7>
+          <h2 className="info-item">Total Correct Prediction Percentage</h2>
           <p
             style={{
               fontSize: "50px",

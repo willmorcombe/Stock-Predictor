@@ -153,58 +153,8 @@ img {
   display: none;
 }
 
-/*  ========== MEDIA QUERIES ================*/
-
-/* MEDIUM DEVICES */
-
-@media (hover: hover) and (pointer: fine) {
-  a:hover {
-    color: var(--color-white);
-  }
-
-  .btn:hover {
-    background: var(--color-white);
-    color: var(--bg-color);
-    border-color: transparent;
-  }
-}
-@media screen and (max-width: 1080px) {
-  .container {
-    width: var(--container-width-md);
-  }
-
-  section {
-    margin-top: 0;
-    padding-bottom: 10rem;
-    padding-left: 5rem;
-    padding-right: 5rem;
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .container {
-    width: var(--container-width-md);
-  }
-}
-
-/* SMALL DEVICES */
-
-@media screen and (max-width: 600px) {
-  .container {
-    width: var(--container-width-sm);
-  }
-
-  section > h2 {
-    margin-top: 2rem;
-  }
-}
-
-@media (-webkit-device-pixel-ratio: 1.5) {
-  .container,
-  nav {
-    zoom: 70%;
-  }
-}
+/* ============================= PAGE CSS ============================ */
+/* ============================= HOMEPAGE ============================= */
 
 .homepage-data {
   display: flex;
@@ -254,13 +204,13 @@ img {
   flex-direction: column;
 }
 
-.stock-info-item,
+.info-item,
 .stock-data-item {
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
 
-.stock-description {
+.description {
   color: var(--color-light);
 }
 
@@ -338,4 +288,68 @@ img {
 
 .stock-history-table tbody tr:last-of-type {
   border-bottom: 2px solid #009879;
+}
+
+/*  ========== MEDIA QUERIES ================*/
+
+/* MEDIUM DEVICES */
+
+@media (hover: hover) and (pointer: fine) {
+  a:hover {
+    color: var(--color-white);
+  }
+
+  .btn:hover {
+    background: var(--color-white);
+    color: var(--bg-color);
+    border-color: transparent;
+  }
+}
+@media screen and (max-width: 1080px) {
+  .container {
+    width: var(--container-width-md);
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    width: var(--container-width-md);
+  }
+}
+
+/* SMALL DEVICES */
+
+@media screen and (max-width: 600px) {
+  .container {
+    width: var(--container-width-sm);
+  }
+
+  section {
+    margin: 0 1rem 0 1rem;
+    padding: 0;
+  }
+
+  section > h2 {
+    margin-top: 2rem;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  h7 {
+    text-align: center;
+  }
+  .stocks-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (-webkit-device-pixel-ratio: 1.5) {
+  .container,
+  nav {
+    zoom: 70%;
+  }
 }

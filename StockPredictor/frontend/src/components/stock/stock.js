@@ -76,7 +76,7 @@ export default function Stock() {
 
       <div className="stock-info">
         <h5 className="stock-info-item">Company Information</h5>
-        <h7 className="stock-info-item stock-description">
+        <h7 className="stock-info-item description">
           {stock_details.company_description}
         </h7>
         <div className="stock-info-item stock-info-details">
