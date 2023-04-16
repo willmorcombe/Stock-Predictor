@@ -28,7 +28,6 @@ export default function History(props) {
             : null}
         </b>
       </h2>
-      {console.log(props.stock_prediction_history)}
       <p
         style={{
           fontSize: "50px",
