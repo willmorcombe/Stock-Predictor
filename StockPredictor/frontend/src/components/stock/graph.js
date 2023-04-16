@@ -20,6 +20,18 @@ ChartJS.register(
 );
 
 export default function Graph(props) {
+  const [windowDimensions, setWindowDimensions] = useState({
+    winWidth: window.innerWidth,
+    winHeight: window.innerHeight,
+  });
+
+  const detectSize = () => {
+    setWindowDimensions({
+      winWidth: window.innerWidth,
+      winHeight: window.innerHeight,
+    });
+  };
+
   const xAxisLabels = () => {
     const arrayUnique = (array) => {
       var a = array.concat();
@@ -97,6 +109,8 @@ export default function Graph(props) {
         },
       },
     },
+    responsive: true,
+    maintainAspectRatio: false,
     scales: {
       y: {
         title: {
@@ -138,5 +152,31 @@ export default function Graph(props) {
       },
     },
   };
-  return <Line data={graph_data} options={graph_options}></Line>;
+
+  useEffect(() => {
+    window.addEventListener("resize", detectSize);
+
+    return () => {
+      window.removeEventListener("resize", detectSize);
+    };
+  });
+  console.log(
+    windowDimensions.winWidth < 600
+      ? 600
+      : windowDimensions.winWidth > 1000
+      ? 1000
+      : windowDimensions.winWidth
+  );
+  return (
+    <div
+      style={{
+        height: windowDimensions.winWidth / 2,
+        width: "100%",
+        minHeight: "600px",
+        maxHeight: "1000px",
+      }}
+    >
+      <Line data={graph_data} options={graph_options}></Line>
+    </div>
+  );
 }
