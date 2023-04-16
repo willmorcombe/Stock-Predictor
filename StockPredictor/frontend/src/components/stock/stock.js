@@ -191,15 +191,16 @@ export default function Stock() {
         stock_prediction_history={stock_prediction_history}
         stock_details={stock_details}
       />
-
-      <a
-        className="btn btn-primary"
-        onClick={() => {
-          navigate("/");
-        }}
-      >
-        Homepage
-      </a>
+      <div className="stock-button">
+        <a
+          className="btn btn-primary"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          Homepage
+        </a>
+      </div>
     </section>
   );
 }

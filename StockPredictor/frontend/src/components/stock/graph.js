@@ -160,13 +160,7 @@ export default function Graph(props) {
       window.removeEventListener("resize", detectSize);
     };
   });
-  console.log(
-    windowDimensions.winWidth < 600
-      ? 600
-      : windowDimensions.winWidth > 1000
-      ? 1000
-      : windowDimensions.winWidth
-  );
+
   return (
     <div
       style={{

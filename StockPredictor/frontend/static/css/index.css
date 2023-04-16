@@ -293,9 +293,11 @@ img {
   border-bottom: 2px solid #009879;
 }
 
-canvas {
-  width: 700px;
-  height: 300px;
+.stock-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 2rem;
 }
 
 /*  ========== MEDIA QUERIES ================*/
@@ -348,10 +350,15 @@ canvas {
   h7 {
     text-align: center;
   }
+
   .stocks-container {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  .stock-history-table {
+    transform: scale(0.9);
   }
 }
 
