@@ -70,6 +70,7 @@ h3,
 h4,
 h5 {
   font-weight: 500;
+  text-align: center;
 }
 
 h1 {
@@ -208,6 +209,8 @@ img {
 .stock-data-item {
   padding-top: 2rem;
   padding-bottom: 2rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .description {
@@ -290,6 +293,13 @@ img {
   border-bottom: 2px solid #009879;
 }
 
+.stock-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 2rem;
+}
+
 /*  ========== MEDIA QUERIES ================*/
 
 /* MEDIUM DEVICES */
@@ -340,10 +350,15 @@ img {
   h7 {
     text-align: center;
   }
+
   .stocks-container {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  .stock-history-table {
+    transform: scale(0.9);
   }
 }
 

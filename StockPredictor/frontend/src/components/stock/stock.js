@@ -103,9 +103,11 @@ export default function Stock() {
 
       <div className="stock-data">
         <h5 className="stock-data-item">Company Data</h5>
+
         <h2 className="stock-data-graph-title stock-data-item">
           Graph Showing Predicted / Realtime Close Values
         </h2>
+
         <Graph
           className="stock-data-item"
           stock_prediction_data={stock_prediction_data}
@@ -189,15 +191,16 @@ export default function Stock() {
         stock_prediction_history={stock_prediction_history}
         stock_details={stock_details}
       />
-
-      <a
-        className="btn btn-primary"
-        onClick={() => {
-          navigate("/");
-        }}
-      >
-        Homepage
-      </a>
+      <div className="stock-button">
+        <a
+          className="btn btn-primary"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          Homepage
+        </a>
+      </div>
     </section>
   );
 }
