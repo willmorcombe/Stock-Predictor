@@ -16,7 +16,7 @@
   --color-priamry-variant: rgba(77, 181, 255, 0.4); */
 
   --bg-color: #00000f;
-  --bg-color-variant: #00000f;
+  --bg-color-variant: #00001b;
   --bg-color-two: #00000f;
   --bg-color-three: #00000f;
   --bg-color-four: #575757;
@@ -84,16 +84,8 @@ h5 {
 section {
   margin-top: 0;
   padding-bottom: 10rem;
-  padding-left: 10rem;
-  padding-right: 10rem;
-}
-
-.about-header-divider {
-  display: grid;
-  grid-template-columns: 1fr;
-  background: var(--color-primary);
-  color: var(--color-primary);
-  margin-bottom: 8rem;
+  padding-left: 30rem;
+  padding-right: 30rem;
 }
 
 svg {
@@ -155,6 +147,63 @@ img {
 }
 
 /* ============================= PAGE CSS ============================ */
+/* ============================= NAVBAR =============================== */
+
+header {
+  background: var(--bg-color-variant);
+  height: 5rem;
+  box-shadow: 0px 1.5rem 1.5rem var(--color-black);
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+}
+
+.nav-contents {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 0 0 30rem;
+}
+
+.nav-menu-contents {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+
+  width: 100%;
+}
+
+.nav-title {
+  font-size: 2rem;
+  width: 50%;
+  text-align: left;
+}
+
+.nav-button {
+  font-weight: 600;
+}
+
+.nav-button:hover {
+  cursor: pointer;
+}
+
+.nav-toggler div {
+  width: 40px;
+  height: 2px;
+  margin: 6px;
+  background: var(--color-white);
+  transition: 0.1s ease-in;
+}
+
+.nav-toggler {
+  cursor: pointer;
+  display: none;
+}
+
 /* ============================= HOMEPAGE ============================= */
 
 .homepage-data {
@@ -168,10 +217,6 @@ img {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.1rem;
-}
-
-.stocks-section {
-  background: var(--bg-color-three);
 }
 
 .stocks-item {
@@ -302,6 +347,18 @@ img {
 
 /*  ========== MEDIA QUERIES ================*/
 
+/* 1920 width devices */
+
+@media screen and (max-width: 2000px) {
+  section {
+    padding: 0 10rem 0 10rem;
+  }
+
+  .nav-contents {
+    padding: 0 0 0 10rem;
+  }
+}
+
 /* MEDIUM DEVICES */
 
 @media (hover: hover) and (pointer: fine) {
@@ -315,21 +372,25 @@ img {
     border-color: transparent;
   }
 }
+
 @media screen and (max-width: 1080px) {
   .container {
     width: var(--container-width-md);
   }
-}
 
-@media screen and (max-width: 1024px) {
-  .container {
-    width: var(--container-width-md);
+  .nav-contents {
+    padding: 0 0 0 1rem;
+  }
+
+  nav {
+    justify-content: right;
+    padding: 0 1rem 0 0;
   }
 }
 
 /* SMALL DEVICES */
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 725px) {
   .container {
     width: var(--container-width-sm);
   }
@@ -360,6 +421,30 @@ img {
   .stock-history-table {
     transform: scale(0.9);
   }
+
+  /* nav stuff */
+  .nav-toggler {
+    display: block;
+  }
+
+  .nav-title {
+    font-size: 1.2rem;
+  }
+
+  .nav-menu-contents {
+    position: fixed;
+    top: 10vh;
+    right: 0;
+    width: 50%;
+    height: 90vh;
+    background: var(--bg-color-variant);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5rem;
+    transform: translateX(100%);
+    transition: 0.2s ease-in;
+  }
 }
 
 @media (-webkit-device-pixel-ratio: 1.5) {
@@ -367,4 +452,23 @@ img {
   nav {
     zoom: 70%;
   }
+}
+
+/* below all css to be read after moblie */
+.nav-active {
+  transform: translateX(0);
+}
+
+/* Toggle Icon Animation */
+
+.toggle .line1 {
+  transform: rotate(-45deg);
+  translate: 0 8px;
+}
+.toggle .line2 {
+  opacity: 0;
+}
+.toggle .line3 {
+  transform: rotate(45deg);
+  translate: 0 -8px;
 }
