@@ -8,5 +8,6 @@ urlpatterns = [
     path('stock_data_day=<str:pk>', views.StockDataDay.as_view(), name='stock_data_day'),
     path('stock_prediction_history=<str:pk>', views.StockPredictionHistoryStock.as_view(), name='stock_prediction_history'),
     path('stock_prediction_history_all', views.StockPredictionHistoryAll.as_view(), name='stock_prediction_history_all'),
-    
+    path('stock_prediction_history_week', views.StockPredictionHistoryWeek.as_view(), name='stock_prediction_history_week'),
+    path('stock_hot_stocks', views.HotStocks.as_view(), name='stock_hot_stocks'),
 ]

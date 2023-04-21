@@ -16,7 +16,7 @@
   --color-priamry-variant: rgba(77, 181, 255, 0.4); */
 
   --bg-color: #00000f;
-  --bg-color-variant: #00000f;
+  --bg-color-variant: #00001b;
   --bg-color-two: #00000f;
   --bg-color-three: #00000f;
   --bg-color-four: #575757;
@@ -84,16 +84,8 @@ h5 {
 section {
   margin-top: 0;
   padding-bottom: 10rem;
-  padding-left: 10rem;
-  padding-right: 10rem;
-}
-
-.about-header-divider {
-  display: grid;
-  grid-template-columns: 1fr;
-  background: var(--color-primary);
-  color: var(--color-primary);
-  margin-bottom: 8rem;
+  padding-left: 30rem;
+  padding-right: 30rem;
 }
 
 svg {
@@ -155,6 +147,59 @@ img {
 }
 
 /* ============================= PAGE CSS ============================ */
+/* ============================= NAVBAR =============================== */
+
+header {
+  background: var(--bg-color-variant);
+  height: 5rem;
+  box-shadow: 0px 1.5rem 1.5rem var(--color-black);
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+}
+
+.nav-contents {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 0 0 30rem;
+}
+
+.nav-menu-contents {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+
+  width: 100%;
+}
+
+.nav-title {
+  font-size: 2rem;
+  width: 50%;
+  text-align: left;
+}
+
+.nav-button {
+  font-weight: 600;
+}
+
+.nav-toggler div {
+  width: 40px;
+  height: 2px;
+  margin: 6px;
+  background: var(--color-white);
+  transition: 0.1s ease-in;
+}
+
+.nav-toggler {
+  cursor: pointer;
+  display: none;
+}
+
 /* ============================= HOMEPAGE ============================= */
 
 .homepage-data {
@@ -164,14 +209,42 @@ img {
   flex-direction: column;
 }
 
+.homepage-statistics {
+  width: 100%;
+  border: 2px solid var(--color-white);
+  border-radius: 2rem;
+  transition: 0.2s ease-in;
+}
+
+.statistics-div {
+  display: flex;
+  justify-content: space-around;
+}
+
+.statistics-item {
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.percentage-brackets {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.percentage-brackets > p {
+  font-weight: 500;
+}
+
+/* =======================stocks.js component ================= */
+
 .stocks-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 0.1rem;
-}
-
-.stocks-section {
-  background: var(--bg-color-three);
+  gap: 3rem;
 }
 
 .stocks-item {
@@ -181,7 +254,8 @@ img {
   background: var(--bg-color);
   padding: 1.3rem;
   border-radius: 0rem;
-  border: 2px solid var(--color-dark-blue);
+  border: 2px solid var(--color-white);
+  border-radius: 2rem;
   transition: var(--transition);
 }
 
@@ -196,7 +270,7 @@ img {
   transition: var(--transition);
 }
 
-/* ====================== stocks component ==================== */
+/* ====================== stock page component ==================== */
 
 .stock-info {
   display: flex;
@@ -302,34 +376,45 @@ img {
 
 /*  ========== MEDIA QUERIES ================*/
 
-/* MEDIUM DEVICES */
+/* 1920 width devices */
 
-@media (hover: hover) and (pointer: fine) {
-  a:hover {
-    color: var(--color-white);
+@media screen and (max-width: 2000px) {
+  section {
+    padding: 0 10rem 0 10rem;
   }
 
-  .btn:hover {
-    background: var(--color-white);
-    color: var(--bg-color);
-    border-color: transparent;
+  .nav-contents {
+    padding: 0 0 0 10rem;
   }
 }
+
+/* MEDIUM DEVICES */
+
 @media screen and (max-width: 1080px) {
   .container {
     width: var(--container-width-md);
   }
-}
 
-@media screen and (max-width: 1024px) {
-  .container {
-    width: var(--container-width-md);
+  .nav-contents {
+    padding: 0 0 0 1rem;
+  }
+
+  nav {
+    justify-content: right;
+    padding: 0 1rem 0 0;
+  }
+
+  /* ========== stocks page ============= */
+  .stocks-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
   }
 }
 
 /* SMALL DEVICES */
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 725px) {
   .container {
     width: var(--container-width-sm);
   }
@@ -360,6 +445,37 @@ img {
   .stock-history-table {
     transform: scale(0.9);
   }
+
+  /* ============================ nav stuff ================================*/
+  .nav-toggler {
+    display: block;
+  }
+
+  .nav-title {
+    font-size: 1.2rem;
+  }
+
+  .nav-menu-contents {
+    position: fixed;
+    top: 8vh;
+    right: 0;
+    width: 50%;
+    height: 92vh;
+    background: var(--bg-color-variant);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5rem;
+    transform: translateX(100%);
+    transition: 0.2s ease-in;
+  }
+
+  /*============================= hompage stuff ============================*/
+
+  .statistics-div {
+    flex-direction: column;
+    gap: 5rem;
+  }
 }
 
 @media (-webkit-device-pixel-ratio: 1.5) {
@@ -367,4 +483,56 @@ img {
   nav {
     zoom: 70%;
   }
+}
+
+/* ALL HOVER QUERIES IN HERE!! */
+@media (hover: hover) and (pointer: fine) {
+  /* nav */
+  .nav-button:hover {
+    cursor: pointer;
+  }
+
+  /* hompage */
+  .homepage-statistics:hover {
+    border: 2px solid var(--color-primary);
+    background: var(--bg-color-variant);
+    cursor: default;
+  }
+
+  /* stocks page */
+
+  .stocks-item:hover {
+    background: var(--bg-color-variant);
+    border: 2px solid var(--color-primary);
+  }
+
+  /* buttons */
+  a:hover {
+    color: var(--color-white);
+  }
+
+  .btn:hover {
+    background: var(--color-white);
+    color: var(--bg-color);
+    border-color: transparent;
+  }
+}
+
+/* below all css to be read after moblie */
+.nav-active {
+  transform: translateX(0);
+}
+
+/* Toggle Icon Animation */
+
+.toggle .line1 {
+  transform: rotate(-45deg);
+  translate: 0 8px;
+}
+.toggle .line2 {
+  opacity: 0;
+}
+.toggle .line3 {
+  transform: rotate(45deg);
+  translate: 0 -8px;
 }

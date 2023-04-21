@@ -7,7 +7,8 @@ from rest_framework.response import Response
 from .models import Stock, StockData, StockPredictionData, StockPredictionHistory
 from .serializers import StockDetailsSerializer, StockDataSerializer, StockPredictionDataSerializer, StockPredictionHistorySerializer
 
-from datetime import date
+from datetime import timedelta, date
+import json
 
 class StockDetailsList(APIView):
     def get(self, request):
@@ -86,6 +87,33 @@ class StockPredictionHistoryAll(APIView):
         all_history = StockPredictionHistory.objects.all()
         
         stock_prediction_history_serializer = StockPredictionHistorySerializer(all_history, many=True)
-
         return Response(stock_prediction_history_serializer.data, status=200)
+    
+class StockPredictionHistoryWeek(APIView):
+    def get(self, request):
+
+        date_last_week = date.today() + timedelta(-7)
+        print(date_last_week)
+        week_history = StockPredictionHistory.objects.filter(day__gte=date_last_week).order_by('-day')
+        
+        stock_prediction_history_serializer = StockPredictionHistorySerializer(week_history, many=True)
+        return Response(stock_prediction_history_serializer.data, status=200)
+    
+
+class HotStocks(APIView):
+
+    def get(self, request):
+        try:
+            hot_stock_all = StockPredictionHistory.get_hot_stock_overall(all_time=True)
+            hot_stock_weekly = StockPredictionHistory.get_hot_stock_overall(all_time=False)
+            return Response([{"weekly": {
+                "ticker" : hot_stock_weekly[0],
+                "percentage" : hot_stock_weekly[1]
+            },
+                            "all_time": {
+                "ticker" : hot_stock_all[0],
+                "percentage" : hot_stock_all[1]
+                            }}], status=200)
+        except:
+            return Response({"message" : "Error"}, status=400)
         
