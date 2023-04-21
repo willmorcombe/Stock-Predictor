@@ -46,5 +46,20 @@ class StockPredictionHistory(models.Model):
     prediction_end_close = models.FloatField()
     actual_end_close = models.FloatField()
     day = models.DateTimeField()
+
+    @classmethod # get the stock that is doing the best overall or weekly
+    def get_hot_stock_overall(self, all_time):
+        stock_percentage_list = []
+        all_stocks = Stock.objects.all()
+        for stock in all_stocks:
+            if all_time:
+                stock_prediction_data = self.objects.filter(stock=stock).values('correct_prediction')
+            else:
+                stock_prediction_data = self.objects.filter(stock=stock).order_by('-day').values('correct_prediction')[:5]
+            stock_prediction_correct = [prediction['correct_prediction'] for prediction in stock_prediction_data if prediction['correct_prediction']]
+            stock_percentage_list.append([stock.ticker, len(stock_prediction_correct) / len(stock_prediction_data) * 100])
+        return max(stock_percentage_list)
+
+            
     
 
