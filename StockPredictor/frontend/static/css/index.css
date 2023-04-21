@@ -187,10 +187,6 @@ nav {
   font-weight: 600;
 }
 
-.nav-button:hover {
-  cursor: pointer;
-}
-
 .nav-toggler div {
   width: 40px;
   height: 2px;
@@ -213,45 +209,11 @@ nav {
   flex-direction: column;
 }
 
-.stocks-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 0.1rem;
-}
-
-.stocks-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background: var(--bg-color);
-  padding: 1.3rem;
-  border-radius: 0rem;
-  border: 2px solid var(--color-dark-blue);
-  transition: var(--transition);
-}
-
-.stocks-item h3 {
-  margin: 1.2rem 0 2rem;
-  text-align: center;
-}
-
-.stocks-item-button {
-  display: flex;
-  justify-content: center;
-  transition: var(--transition);
-}
-
 .homepage-statistics {
   width: 100%;
   border: 2px solid var(--color-white);
   border-radius: 2rem;
   transition: 0.2s ease-in;
-}
-
-.homepage-statistics:hover {
-  border: 2px solid var(--color-primary);
-  background: var(--bg-color-variant);
-  cursor: default;
 }
 
 .statistics-div {
@@ -277,7 +239,38 @@ nav {
   font-weight: 500;
 }
 
-/* ====================== stocks component ==================== */
+/* =======================stocks.js component ================= */
+
+.stocks-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3rem;
+}
+
+.stocks-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--bg-color);
+  padding: 1.3rem;
+  border-radius: 0rem;
+  border: 2px solid var(--color-white);
+  border-radius: 2rem;
+  transition: var(--transition);
+}
+
+.stocks-item h3 {
+  margin: 1.2rem 0 2rem;
+  text-align: center;
+}
+
+.stocks-item-button {
+  display: flex;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+/* ====================== stock page component ==================== */
 
 .stock-info {
   display: flex;
@@ -397,18 +390,6 @@ nav {
 
 /* MEDIUM DEVICES */
 
-@media (hover: hover) and (pointer: fine) {
-  a:hover {
-    color: var(--color-white);
-  }
-
-  .btn:hover {
-    background: var(--color-white);
-    color: var(--bg-color);
-    border-color: transparent;
-  }
-}
-
 @media screen and (max-width: 1080px) {
   .container {
     width: var(--container-width-md);
@@ -421,6 +402,13 @@ nav {
   nav {
     justify-content: right;
     padding: 0 1rem 0 0;
+  }
+
+  /* ========== stocks page ============= */
+  .stocks-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
   }
 }
 
@@ -469,10 +457,10 @@ nav {
 
   .nav-menu-contents {
     position: fixed;
-    top: 10vh;
+    top: 8vh;
     right: 0;
     width: 50%;
-    height: 90vh;
+    height: 92vh;
     background: var(--bg-color-variant);
     display: flex;
     flex-direction: column;
@@ -494,6 +482,39 @@ nav {
   .container,
   nav {
     zoom: 70%;
+  }
+}
+
+/* ALL HOVER QUERIES IN HERE!! */
+@media (hover: hover) and (pointer: fine) {
+  /* nav */
+  .nav-button:hover {
+    cursor: pointer;
+  }
+
+  /* hompage */
+  .homepage-statistics:hover {
+    border: 2px solid var(--color-primary);
+    background: var(--bg-color-variant);
+    cursor: default;
+  }
+
+  /* stocks page */
+
+  .stocks-item:hover {
+    background: var(--bg-color-variant);
+    border: 2px solid var(--color-primary);
+  }
+
+  /* buttons */
+  a:hover {
+    color: var(--color-white);
+  }
+
+  .btn:hover {
+    background: var(--color-white);
+    color: var(--bg-color);
+    border-color: transparent;
   }
 }
 
