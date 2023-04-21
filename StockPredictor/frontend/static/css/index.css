@@ -241,6 +241,42 @@ nav {
   transition: var(--transition);
 }
 
+.homepage-statistics {
+  width: 100%;
+  border: 2px solid var(--color-white);
+  border-radius: 2rem;
+  transition: 0.2s ease-in;
+}
+
+.homepage-statistics:hover {
+  border: 2px solid var(--color-primary);
+  background: var(--bg-color-variant);
+  cursor: default;
+}
+
+.statistics-div {
+  display: flex;
+  justify-content: space-around;
+}
+
+.statistics-item {
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.percentage-brackets {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.percentage-brackets > p {
+  font-weight: 500;
+}
+
 /* ====================== stocks component ==================== */
 
 .stock-info {
@@ -422,7 +458,7 @@ nav {
     transform: scale(0.9);
   }
 
-  /* nav stuff */
+  /* ============================ nav stuff ================================*/
   .nav-toggler {
     display: block;
   }
@@ -444,6 +480,13 @@ nav {
     gap: 5rem;
     transform: translateX(100%);
     transition: 0.2s ease-in;
+  }
+
+  /*============================= hompage stuff ============================*/
+
+  .statistics-div {
+    flex-direction: column;
+    gap: 5rem;
   }
 }
 
