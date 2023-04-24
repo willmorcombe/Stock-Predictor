@@ -210,6 +210,9 @@ nav {
 }
 
 .homepage-statistics {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   width: 100%;
   border: 2px solid var(--color-white);
   border-radius: 2rem;
@@ -237,6 +240,19 @@ nav {
 
 .percentage-brackets > p {
   font-weight: 500;
+}
+
+.hot-stock-link {
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.homepage-statistics-button {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 1rem 0 2rem 0;
 }
 
 /* =======================stocks.js component ================= */
@@ -497,6 +513,12 @@ nav {
     border: 2px solid var(--color-primary);
     background: var(--bg-color-variant);
     cursor: default;
+  }
+
+  .hot-stock-link:hover {
+    color: var(--color-priamry-variant);
+    cursor: pointer;
+    transition: var(--transition);
   }
 
   /* stocks page */

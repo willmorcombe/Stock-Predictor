@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import Navbar from "../navbar/navbar.js";
 
 export default function Hompage(props) {
   const [prediction_history_data, setPredictionData] = useState([]);
   const [hot_stocks_data, setHotStocks] = useState([]);
   const [prediction_history_data_week, setPredictionDataWeek] = useState([]);
+
+  const navigate = useNavigate();
 
   const getOverallPredictionPercentage = (history_data) => {
     return (
@@ -85,9 +87,17 @@ export default function Hompage(props) {
                   <div className="hot-stocks">
                     <h7>Overall Hot Stock</h7>
                     <p
+                      className="hot-stock-link"
+                      onClick={() => {
+                        navigate(
+                          "/stock/" +
+                            hot_stocks_data.map((d) => {
+                              return d.all_time.id;
+                            })[0]
+                        );
+                      }}
                       style={{
                         fontSize: "50px",
-                        color: "var(--color-primary)",
                       }}
                     >
                       {
@@ -152,9 +162,17 @@ export default function Hompage(props) {
                   <div className="hot-stocks">
                     <h7>Weekly Hot Stock</h7>
                     <p
+                      className="hot-stock-link"
+                      onClick={() => {
+                        navigate(
+                          "/stock/" +
+                            hot_stocks_data.map((d) => {
+                              return d.weekly.id;
+                            })[0]
+                        );
+                      }}
                       style={{
                         fontSize: "50px",
-                        color: "var(--color-primary)",
                       }}
                     >
                       {
@@ -192,6 +210,16 @@ export default function Hompage(props) {
                     </p>
                   </div>
                 </div>
+              </div>
+              <div className="homepage-statistics-button">
+                <a
+                  onClick={() => {
+                    navigate("/about");
+                  }}
+                  className="btn btn-primary"
+                >
+                  How are these statistics measured?
+                </a>
               </div>
             </div>
           </div>

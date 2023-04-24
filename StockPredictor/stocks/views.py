@@ -107,12 +107,14 @@ class HotStocks(APIView):
             hot_stock_all = StockPredictionHistory.get_hot_stock_overall(all_time=True)
             hot_stock_weekly = StockPredictionHistory.get_hot_stock_overall(all_time=False)
             return Response([{"weekly": {
-                "ticker" : hot_stock_weekly[0],
-                "percentage" : hot_stock_weekly[1]
+                "id" : hot_stock_weekly[0],
+                "ticker" : hot_stock_weekly[1],
+                "percentage" : hot_stock_weekly[2]
             },
                             "all_time": {
-                "ticker" : hot_stock_all[0],
-                "percentage" : hot_stock_all[1]
+                "id" : hot_stock_all[0],
+                "ticker" : hot_stock_all[1],
+                "percentage" : hot_stock_all[2]
                             }}], status=200)
         except:
             return Response({"message" : "Error"}, status=400)
