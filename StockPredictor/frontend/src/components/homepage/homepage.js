@@ -52,7 +52,7 @@ export default function Hompage(props) {
       <Navbar />
       <div>
         <section className="hompage-section">
-          <div className="homepage-data">
+          <div className="page-data">
             <h1 className="info-item">Stock Prediction</h1>
             <h2 className="info-item">Website Description</h2>
             <h7 className="description info-item">
@@ -64,7 +64,7 @@ export default function Hompage(props) {
               the stock go up when it was predicted to, or did the stock go down
               when it was predicted to).
             </h7>
-            <div className="homepage-statistics">
+            <div className="page-article">
               <h2 className="info-item">Test Stocks Statistics</h2>
               <div className="statistics-div">
                 <div className="statistics-item">
@@ -211,7 +211,7 @@ export default function Hompage(props) {
                   </div>
                 </div>
               </div>
-              <div className="homepage-statistics-button">
+              <div className="page-article-button">
                 <a
                   onClick={() => {
                     navigate("/about");
