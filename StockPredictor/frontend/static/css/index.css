@@ -8,6 +8,25 @@
   text-decoration: none;
 }
 
+.page {
+  height: 100%;
+}
+
+.page-content {
+  min-height: 100%;
+  margin-bottom: var(--footer-height);
+}
+
+.page-content:after {
+  content: "";
+  display: block;
+}
+
+footer,
+.page-content:after {
+  height: var(--footer-height);
+}
+
 :root {
   /* colors */
   /* --bg-color: #1f1f38;
@@ -39,10 +58,14 @@
   /* trainsition */
 
   --transition: all 400ms ease;
+
+  /* footer height */
+  --footer-height: 150px;
 }
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 ::-webkit-scrollbar {
@@ -409,6 +432,12 @@ nav {
   justify-content: center;
   flex-direction: column;
   padding: 1rem;
+}
+
+/* ============================ FOOTER =============================== */
+
+footer {
+  background: var(--color-primary);
 }
 
 /*  ========== MEDIA QUERIES ================*/
