@@ -8,6 +8,24 @@
   text-decoration: none;
 }
 
+.page {
+  height: 100%;
+}
+
+.page-content {
+  min-height: 100%;
+}
+
+.page-content:after {
+  content: "";
+  display: block;
+}
+
+footer,
+.page-content:after {
+  height: var(--footer-height);
+}
+
 :root {
   /* colors */
   /* --bg-color: #1f1f38;
@@ -39,10 +57,14 @@
   /* trainsition */
 
   --transition: all 400ms ease;
+
+  /* footer height */
+  --footer-height: 200px;
 }
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 ::-webkit-scrollbar {
@@ -146,6 +168,10 @@ img {
   display: none;
 }
 
+.statistics-divide {
+  display: none;
+}
+
 /* ============================= PAGE CSS ============================ */
 /* ============================= NAVBAR =============================== */
 
@@ -202,18 +228,22 @@ nav {
 
 /* ============================= HOMEPAGE ============================= */
 
-.homepage-data {
+.page-data {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-.homepage-statistics {
+.page-article {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   width: 100%;
   border: 2px solid var(--color-white);
   border-radius: 2rem;
   transition: 0.2s ease-in;
+  text-align: center;
 }
 
 .statistics-div {
@@ -237,6 +267,38 @@ nav {
 
 .percentage-brackets > p {
   font-weight: 500;
+}
+
+.hot-stock-link {
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.page-article-button {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 1rem 0 2rem 0;
+}
+
+.statistics-today-item-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.statistics-today-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.statistics-today-div {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
 }
 
 /* =======================stocks.js component ================= */
@@ -374,6 +436,78 @@ nav {
   padding-bottom: 2rem;
 }
 
+/* ========================== ABOUT PAGE ========================= */
+
+.about-article-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.about-main-container {
+  gap: 2rem;
+}
+
+.about-article-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+/* ============================ FOOTER =============================== */
+
+footer {
+  display: flex;
+  justify-content: center;
+  background: var(--color-primary);
+  align-items: center;
+  box-shadow: 0rem 0rem 1.5rem 1.5rem var(--color-black);
+}
+
+.footer-icons {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 6rem;
+  align-items: center;
+}
+
+.icon {
+  font-size: 2.5rem;
+  color: black;
+  z-index: 10;
+  transition: var(--transition);
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-link {
+  color: black;
+  font-weight: 550;
+  cursor: pointer;
+}
+
+.footer-copyright {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 0.2rem;
+}
+
+.footer-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 /*  ========== MEDIA QUERIES ================*/
 
 /* 1920 width devices */
@@ -421,7 +555,7 @@ nav {
 
   section {
     margin: 0 1rem 0 1rem;
-    padding: 0;
+    padding: 0 0 5rem 0;
   }
 
   section > h2 {
@@ -447,6 +581,7 @@ nav {
   }
 
   /* ============================ nav stuff ================================*/
+
   .nav-toggler {
     display: block;
   }
@@ -455,12 +590,16 @@ nav {
     font-size: 1.2rem;
   }
 
+  .nav-contents {
+    justify-content: space-between;
+  }
+
   .nav-menu-contents {
     position: fixed;
-    top: 8vh;
+    top: 0;
     right: 0;
     width: 50%;
-    height: 92vh;
+    height: 100vh;
     background: var(--bg-color-variant);
     display: flex;
     flex-direction: column;
@@ -475,6 +614,26 @@ nav {
   .statistics-div {
     flex-direction: column;
     gap: 5rem;
+  }
+
+  .statistics-today-item-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .statistics-divide {
+    display: block;
+  }
+
+  /* ========================= ABOUT STUFF ================================ */
+
+  .about-article-container {
+    flex-direction: column;
+  }
+
+  /* =========================== FOOTER STUFF ============================== */
+  .footer-icons {
+    gap: 4rem;
   }
 }
 
@@ -493,10 +652,16 @@ nav {
   }
 
   /* hompage */
-  .homepage-statistics:hover {
+  .page-article:hover {
     border: 2px solid var(--color-primary);
     background: var(--bg-color-variant);
     cursor: default;
+  }
+
+  .hot-stock-link:hover {
+    color: var(--color-priamry-variant);
+    cursor: pointer;
+    transition: var(--transition);
   }
 
   /* stocks page */
@@ -516,11 +681,24 @@ nav {
     color: var(--bg-color);
     border-color: transparent;
   }
+
+  /* footer */
+
+  .icon:hover {
+    color: white;
+    transition: var(--transition);
+  }
 }
 
 /* below all css to be read after moblie */
 .nav-active {
   transform: translateX(0);
+}
+
+.icon-active {
+  position: fixed;
+  top: 1.5rem;
+  right: 0rem;
 }
 
 /* Toggle Icon Animation */

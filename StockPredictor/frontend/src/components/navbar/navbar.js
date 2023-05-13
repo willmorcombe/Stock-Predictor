@@ -5,6 +5,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const [active, setActive] = useState("nav-menu-contents");
   const [icon, setIcon] = useState("nav-toggler");
+  const [icon_fixed, setIconFixed] = useState("");
 
   const navToggle = () => {
     active === "nav-menu-contents"
@@ -14,6 +15,8 @@ export default function Navbar() {
     icon === "nav-toggler"
       ? setIcon("nav-toggler toggle")
       : setIcon("nav-toggler");
+
+    icon_fixed === "" ? setIconFixed("icon-active") : setIconFixed("");
   };
 
   return (
@@ -21,7 +24,7 @@ export default function Navbar() {
       <div className="nav-contents">
         <h2 className="nav-title">Stock Predictor App</h2>
 
-        <nav>
+        <nav className={icon_fixed}>
           <div className={active}>
             <a
               className="nav-button"
