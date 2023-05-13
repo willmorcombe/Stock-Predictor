@@ -57,9 +57,9 @@ class StockPredictionHistory(models.Model):
             else:
                 stock_prediction_data = self.objects.filter(stock=stock).order_by('-day').values('correct_prediction')[:5]
             stock_prediction_correct = [prediction['correct_prediction'] for prediction in stock_prediction_data if prediction['correct_prediction']]
-            stock_percentage_list.append([stock.id, stock.ticker, len(stock_prediction_correct) / len(stock_prediction_data) * 100])
+            stock_percentage_list.append([stock.ticker, len(stock_prediction_correct) / len(stock_prediction_data) * 100])
 
-        return max(stock_percentage_list, key=lambda x:x[2])
+        return max(stock_percentage_list, key=lambda x:x[1])
 
             
     
