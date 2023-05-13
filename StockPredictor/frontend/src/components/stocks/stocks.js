@@ -24,7 +24,7 @@ export default function Stocks() {
     <div className="page">
       <div className="page-content">
         <Navbar />
-        <h1>TESTING STOCKS PAGE</h1>
+        <h1 className="info-item">Avalible Preview Stocks</h1>
 
         <section id="homepage-stocks" className="stocks-section">
           <div className="stock-header-divider"></div>
