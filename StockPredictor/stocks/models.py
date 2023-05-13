@@ -40,6 +40,25 @@ class StockPredictionData(models.Model):
     stock = models.ForeignKey(Stock, on_delete=models.CASCADE, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
 
+
+    @classmethod # returns a list of the predicted percentage increases/decreases for all stocks (sorted)
+    def get_stock_prediction_percentages(self):
+        stock_percentage_change_list = []
+        all_stocks = Stock.objects.all()
+        for stock in all_stocks:
+            prediction_objs = self.objects.filter(
+                    stock=stock
+                ).order_by('-date_time')[:settings.TRAINING_PARAMS['forward_predictions']][::-1]
+
+            stock_percentage_change_list.append(
+                [stock.ticker, ((prediction_objs[-1].close - prediction_objs[0].close) / prediction_objs[0].close) * 100]
+            )
+
+        stock_percentage_change_list.sort(key= lambda x : x[1], reverse=True)
+
+        return stock_percentage_change_list
+            
+
 class StockPredictionHistory(models.Model):
     stock = models.ForeignKey(Stock, on_delete=models.CASCADE, default=None)
     correct_prediction = models.BooleanField()
@@ -60,7 +79,3 @@ class StockPredictionHistory(models.Model):
             stock_percentage_list.append([stock.id, stock.ticker, len(stock_prediction_correct) / len(stock_prediction_data) * 100])
 
         return max(stock_percentage_list, key=lambda x:x[2])
-
-            
-    
-

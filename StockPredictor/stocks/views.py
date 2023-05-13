@@ -119,3 +119,17 @@ class HotStocks(APIView):
         except:
             return Response({"message" : "Error"}, status=400)
         
+class StockPredictionDayPercentages(APIView):
+
+    def get(self, request):
+        try:
+            data = StockPredictionData.get_stock_prediction_percentages()
+            return Response([
+                {"positive" : data[:2],
+                 "negative" : data[::-1][:2],
+                }
+                ])
+        except:
+            return Response({"message" : "Error"}, status=400)
+    
+        
