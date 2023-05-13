@@ -8,6 +8,25 @@
   text-decoration: none;
 }
 
+.page {
+  height: 100%;
+}
+
+.page-content {
+  min-height: 100%;
+  margin-bottom: var(--footer-height);
+}
+
+.page-content:after {
+  content: "";
+  display: block;
+}
+
+footer,
+.page-content:after {
+  height: var(--footer-height);
+}
+
 :root {
   /* colors */
   /* --bg-color: #1f1f38;
@@ -39,10 +58,14 @@
   /* trainsition */
 
   --transition: all 400ms ease;
+
+  /* footer height */
+  --footer-height: 150px;
 }
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 ::-webkit-scrollbar {
@@ -202,18 +225,22 @@ nav {
 
 /* ============================= HOMEPAGE ============================= */
 
-.homepage-data {
+.page-data {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-.homepage-statistics {
+.page-article {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   width: 100%;
   border: 2px solid var(--color-white);
   border-radius: 2rem;
   transition: 0.2s ease-in;
+  text-align: center;
 }
 
 .statistics-div {
@@ -237,6 +264,19 @@ nav {
 
 .percentage-brackets > p {
   font-weight: 500;
+}
+
+.hot-stock-link {
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.page-article-button {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 1rem 0 2rem 0;
 }
 
 /* =======================stocks.js component ================= */
@@ -374,6 +414,32 @@ nav {
   padding-bottom: 2rem;
 }
 
+/* ========================== ABOUT PAGE ========================= */
+
+.about-article-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.about-main-container {
+  gap: 2rem;
+}
+
+.about-article-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+/* ============================ FOOTER =============================== */
+
+footer {
+  background: var(--color-primary);
+}
+
 /*  ========== MEDIA QUERIES ================*/
 
 /* 1920 width devices */
@@ -421,7 +487,7 @@ nav {
 
   section {
     margin: 0 1rem 0 1rem;
-    padding: 0;
+    padding: 0 0 5rem 0;
   }
 
   section > h2 {
@@ -447,6 +513,7 @@ nav {
   }
 
   /* ============================ nav stuff ================================*/
+
   .nav-toggler {
     display: block;
   }
@@ -455,12 +522,16 @@ nav {
     font-size: 1.2rem;
   }
 
+  .nav-contents {
+    justify-content: space-between;
+  }
+
   .nav-menu-contents {
     position: fixed;
-    top: 8vh;
+    top: 0;
     right: 0;
     width: 50%;
-    height: 92vh;
+    height: 100vh;
     background: var(--bg-color-variant);
     display: flex;
     flex-direction: column;
@@ -475,6 +546,12 @@ nav {
   .statistics-div {
     flex-direction: column;
     gap: 5rem;
+  }
+
+  /* ========================= ABOUT STUFF ================================ */
+
+  .about-article-container {
+    flex-direction: column;
   }
 }
 
@@ -493,10 +570,16 @@ nav {
   }
 
   /* hompage */
-  .homepage-statistics:hover {
+  .page-article:hover {
     border: 2px solid var(--color-primary);
     background: var(--bg-color-variant);
     cursor: default;
+  }
+
+  .hot-stock-link:hover {
+    color: var(--color-priamry-variant);
+    cursor: pointer;
+    transition: var(--transition);
   }
 
   /* stocks page */
@@ -521,6 +604,12 @@ nav {
 /* below all css to be read after moblie */
 .nav-active {
   transform: translateX(0);
+}
+
+.icon-active {
+  position: fixed;
+  top: 1.5rem;
+  right: 0rem;
 }
 
 /* Toggle Icon Animation */
