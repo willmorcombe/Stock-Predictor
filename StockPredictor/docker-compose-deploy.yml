@@ -18,7 +18,7 @@ services:
       - static_data:/vol/web
     environment:
       - SECRET_KEY=django-insecure-9@l^-qwhrrjusb1yqj5iu-qsfn635likb512k9(2b=(#i2%oe)
-      - ALLOWED_HOSTS=localhost,77.68.115.53
+      - ALLOWED_HOSTS=stockpredictorapp.com,www.stockpredictorapp.com,77.68.115.53
     depends_on:
       - stockpredictor-db
 
@@ -27,22 +27,11 @@ services:
       context: ./proxy
     volumes:
       - static_data:/vol/static
-      - ./dhparam:/etc/nginx/dhparam
-      - ./certbot/conf:/etc/nginx/ssl
-      - ./certbot/data:/usr/share/nginx/html/letsencrypt
     ports:
       - "80:80"
       - "443:443"
     depends_on:
       - app
-
-  certbot:
-    image: certbot/certbot:latest
-    command: certonly --webroot --webroot-path=/usr/share/nginx/html/letsencrypt --email wtmorco@live.co.uk --agree-tos --no-eff-email -d stockpredictor.app
-    volumes:
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/logs:/var/log/letsencrypt
-      - ./certbot/data:/usr/share/nginx/html/letsencrypt
   pma:
     restart: on-failure
     image: phpmyadmin/phpmyadmin

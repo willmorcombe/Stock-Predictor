@@ -18,4 +18,7 @@ RUN chmod +x /scripts/*
 
 RUN mkdir -p /vol/web/static
 
+RUN service cron start
+RUN python3 manage.py crontab add
+
 CMD ["entrypoint.sh"]
