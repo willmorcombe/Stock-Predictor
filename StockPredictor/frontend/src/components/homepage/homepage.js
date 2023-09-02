@@ -237,9 +237,11 @@ export default function Hompage(props) {
                           style={{
                             fontSize: "50px",
                             color:
-                              getOverallPredictionPercentage(
-                                prediction_history_data
-                              ) >= 50
+                              parseFloat(
+                                hot_stocks_data.map((d) => {
+                                  return d.all_time.percentage;
+                                })[0]
+                              ).toFixed(1) >= 50
                                 ? "var(--color-green)"
                                 : "red",
                           }}
@@ -312,9 +314,11 @@ export default function Hompage(props) {
                           style={{
                             fontSize: "50px",
                             color:
-                              getOverallPredictionPercentage(
-                                prediction_history_data_week
-                              ) >= 50
+                              parseFloat(
+                                hot_stocks_data.map((d) => {
+                                  return d.weekly.percentage;
+                                })[0]
+                              ).toFixed(1) >= 50
                                 ? "var(--color-green)"
                                 : "red",
                           }}

@@ -400,6 +400,14 @@ nav {
   align-items: center;
 }
 
+.stock-history-table-wrapper {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 400px;
+}
+
 .stock-history-table {
   width: 100%;
   border-collapse: collapse;
