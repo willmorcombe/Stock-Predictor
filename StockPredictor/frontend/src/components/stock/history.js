@@ -41,29 +41,30 @@ export default function History(props) {
       <h2 className="stock-data-graph-title stock-data-item">
         Table Showing All Stock History
       </h2>
-
-      <table className="stock-history-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Correct Prediction?</th>
-            <th>Actual Stock Close</th>
-            <th>Predicted Stock Close</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.stock_prediction_history.map((array) => {
-            return (
-              <tr>
-                <td>{array["day"].split("T")[0]}</td>
-                <td>{array["correct_prediction"] == true ? "YES" : "NO"}</td>
-                <td> {array["actual_end_close"].toFixed(2)} </td>
-                <td> {array["prediction_end_close"].toFixed(2)} </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div className="stock-history-table-wrapper">
+        <table className="stock-history-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Correct Prediction?</th>
+              <th>Actual Stock Close</th>
+              <th>Predicted Stock Close</th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.stock_prediction_history.map((array) => {
+              return (
+                <tr>
+                  <td>{array["day"].split("T")[0]}</td>
+                  <td>{array["correct_prediction"] == true ? "YES" : "NO"}</td>
+                  <td> {array["actual_end_close"].toFixed(2)} </td>
+                  <td> {array["prediction_end_close"].toFixed(2)} </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
