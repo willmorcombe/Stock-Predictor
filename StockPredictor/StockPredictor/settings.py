@@ -118,6 +118,39 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Logging
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": True,
+    "formatters": {
+        "standard": {
+            "format": "%(asctime)s %(levelname)s %(name)s %(message)s"
+        },
+    },
+    "handlers": {
+        "default": {
+            "level": "DEBUG",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "log.log",
+            "maxBytes": 1024*1024*5, # 5 MB
+            "backupCount": 5,
+            "formatter": "standard",
+        },
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "standard",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["default", "console"],
+            "level": "INFO",
+            "propagate": True,
+        },
+    },
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -168,4 +201,5 @@ ALPHAVANTAGE_API_KEY = '7B1AML3IUO4Z75KL'
 CRONJOBS = [
     ('31 * * * *', 'django.core.management.call_command', ['update_database']),
     ('1 1 * * *', 'django.core.management.call_command', ['train_data']),
+    ('* * * * *', 'django.core.management.call_command', ['test_cron']),
 ]
