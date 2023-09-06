@@ -9,6 +9,10 @@ from datetime import date
 import yfinance as yf
 import pandas as pd
 
+import logging
+
+logger = logging.getLogger('django')
+
 # !This should be ran every 1 hour by a script to update with current data
 
 # TODO: Implement comment below
@@ -133,6 +137,9 @@ class Command(BaseCommand):
                         correct_prediction= correct_prediction,
                         day=day
                     ).save()
+
+            
+        logger.info("Database Update Complete")
                 
                 
                 
