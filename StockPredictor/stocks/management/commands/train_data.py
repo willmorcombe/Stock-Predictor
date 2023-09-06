@@ -19,6 +19,10 @@ from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
 
+import logging
+
+logger = logging.getLogger('django')
+
 
 class Command(BaseCommand):
     help = 'trains models on all tickers in the database and saves daily predictions'
@@ -205,6 +209,8 @@ class Command(BaseCommand):
                     stock = stock,
                     )
                 predictions_objs.save()
+            
+            logger.info("Training Completed")
 
             
 
