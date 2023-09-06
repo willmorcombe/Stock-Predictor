@@ -130,9 +130,9 @@ LOGGING = {
     },
     "handlers": {
         "default": {
-            "level": "DEBUG",
+            "level": "INFO",
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": "log.log",
+            "filename": "log/debug.log",
             "maxBytes": 1024*1024*5, # 5 MB
             "backupCount": 5,
             "formatter": "standard",
@@ -201,5 +201,4 @@ ALPHAVANTAGE_API_KEY = '7B1AML3IUO4Z75KL'
 CRONJOBS = [
     ('31 * * * *', 'django.core.management.call_command', ['update_database']),
     ('1 1 * * *', 'django.core.management.call_command', ['train_data']),
-    ('* * * * *', 'django.core.management.call_command', ['test_cron']),
 ]

@@ -16,6 +16,7 @@ services:
       context: .
     volumes:
       - static_data:/vol/web
+      - ./:/app
     environment:
       - SECRET_KEY=django-insecure-9@l^-qwhrrjusb1yqj5iu-qsfn635likb512k9(2b=(#i2%oe)
       - ALLOWED_HOSTS=stockpredictorapp.com,www.stockpredictorapp.com,77.68.115.53
@@ -27,11 +28,13 @@ services:
       context: ./proxy
     volumes:
       - static_data:/vol/static
+      - ../ssl_certs:/etc
     ports:
       - "80:80"
       - "443:443"
     depends_on:
       - app
+
   pma:
     restart: on-failure
     image: phpmyadmin/phpmyadmin
