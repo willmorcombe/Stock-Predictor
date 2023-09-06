@@ -132,7 +132,7 @@ LOGGING = {
         "default": {
             "level": "INFO",
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": "log/debug.log",
+            "filename": os.path.join(BASE_DIR, "log/debug.log"),
             "maxBytes": 1024*1024*5, # 5 MB
             "backupCount": 5,
             "formatter": "standard",
