@@ -143,7 +143,7 @@ LOGGING = {
         },
     },
     "loggers": {
-        "django": {
+        "management": {
             "handlers": ["default", "console"],
             "level": "INFO",
             "propagate": True,
