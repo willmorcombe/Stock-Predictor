@@ -11,7 +11,7 @@ import pandas as pd
 
 import logging
 
-logger = logging.getLogger('django')
+logger = logging.getLogger('management')
 
 # !This should be ran every 1 hour by a script to update with current data
 

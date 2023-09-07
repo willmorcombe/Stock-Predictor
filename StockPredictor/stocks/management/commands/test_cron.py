@@ -3,7 +3,7 @@ from django.conf import settings
 
 import logging
 
-logger = logging.getLogger('django')
+logger = logging.getLogger('management')
 
 
 
