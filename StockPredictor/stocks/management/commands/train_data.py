@@ -145,7 +145,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         try:
-            x = 0 + 'str'
             # get the all stock objects in the database
             stock_in_database = Stock.objects.all()
             current_date = date.today()
