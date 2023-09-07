@@ -211,7 +211,7 @@ class Command(BaseCommand):
                         )
                     predictions_objs.save()
                 
-                logger.info("Training Completed")
+                logger.info(f"Training Completed for -> {stock.ticker}")
 
         except Exception as e:
             logger.error(f'Error training due to -> {e}')
