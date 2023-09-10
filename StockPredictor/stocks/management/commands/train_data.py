@@ -195,21 +195,19 @@ class Command(BaseCommand):
                 predictions = self.make_prediction_day(stock, model_input)
 
                 for prediction_date, prediction in predictions:
-                    #! I have got rid of this to see if this solves prod cron problem
-                    #! It shouldn't have any effect anyways as this will only be ran once.
                     
-                    # # if prediction_date is not in database, add prediction
-                    # if not(StockPredictionData.objects.filter(
-                    #     stock= stock,
-                    #     date_time = prediction_date
-                    # ).exists()):
+                    # if prediction_date is not in database, add prediction
+                    if not(StockPredictionData.objects.filter(
+                        stock= stock,
+                        date_time = prediction_date
+                    ).exists()):
                         
-                    predictions_objs = StockPredictionData(
-                        close = prediction, 
-                        date_time = prediction_date,
-                        stock = stock,
-                        )
-                    predictions_objs.save()
+                        predictions_objs = StockPredictionData(
+                            close = prediction, 
+                            date_time = prediction_date,
+                            stock = stock,
+                            )
+                        predictions_objs.save()
                 
                 logger.info(f"Training Completed for -> {stock.ticker}")
 
