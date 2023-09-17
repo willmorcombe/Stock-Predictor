@@ -137,6 +137,7 @@ class Command(BaseCommand):
                         correct_prediction= correct_prediction,
                         day=day
                     ).save()
+                    logger.info("Stock prediction history updated")
 
             
         logger.info("Database Update Complete")

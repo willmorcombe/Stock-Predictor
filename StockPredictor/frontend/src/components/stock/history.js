@@ -24,7 +24,7 @@ export default function History(props) {
         Correct Prediction Percentage Since{" "}
         <b>
           {props.stock_prediction_history.length
-            ? props.stock_prediction_history[0]["day"].split("T")[0]
+            ? props.stock_prediction_history[-1]["day"].split("T")[0]
             : null}
         </b>
       </h2>
