@@ -199,5 +199,5 @@ ALPHAVANTAGE_API_KEY = '7B1AML3IUO4Z75KL'
 
 CRONJOBS = [
     ('31 * * * *', 'django.core.management.call_command', ['update_database']),
-    ('0 1 * * *', 'django.core.management.call_command', ['train_data']),
+    ('1 0 * * *', 'django.core.management.call_command', ['train_data']),
 ]
