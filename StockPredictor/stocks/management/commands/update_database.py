@@ -26,6 +26,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
+        #! check to see the hour, don't run this at midnight hour as train_data hasn't finished running
+        hour = int(datetime.now().strftime("%H"))
+        if hour == 0 or hour == 1:
+            return 
 
         # get the tickers in the database
         tickers_in_database = [x['ticker'] for x in Stock.objects.values('ticker').distinct()]
